@@ -1,8 +1,25 @@
-"builds": [{
-  "src": "main.py",
-  "use": "@vercel/python@3.0.2",
-  "config": {
-    "runtime": "python3.9",
-    "installCommand": "python -m pip install -r requirements.txt"
-  }
-}]
+{
+  "version": 2,
+  "builds": [{
+    "src": "main.py",
+    "use": "@vercel/python@3.0.2",
+    "config": {
+      "runtime": "python3.9",
+      "maxLambdaSize": "25mb",
+      "suppressLoaders": true,
+      "includeFiles": "main.py|requirements.txt"
+    }
+  }],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/",
+      "headers": { "Cache-Control": "no-store" }
+    },
+    {
+      "src": "/webhook",
+      "dest": "/webhook",
+      "methods": ["POST"]
+    }
+  ]
+}
