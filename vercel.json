@@ -1,8 +1,31 @@
 {
   "version": 2,
-  "builds": [{"src": "main.py", "use": "@vercel/python"}],
+  "builds": [
+    {
+      "src": "main.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "25mb",
+        "suppressLoaders": true,
+        "includeFiles": "main.py|requirements.txt"
+      }
+    }
+  ],
   "routes": [
-    {"src": "/", "dest": "/"},
-    {"src": "/webhook", "methods": ["POST"], "dest": "/webhook"}
+    {
+      "src": "/",
+      "dest": "/",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/webhook",
+      "dest": "/webhook",
+      "methods": ["POST"]
+    },
+    {
+      "src": "/(.*)",
+      "status": 404,
+      "dest": "/404"
+    }
   ]
 }
